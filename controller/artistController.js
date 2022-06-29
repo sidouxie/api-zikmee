@@ -39,7 +39,7 @@ module.exports.postArtist = async (req, res) => {
   }
 };
 
-module.exports.updateArtist = async (req, res, next) => {
+module.exports.updateArtist = async (req, res) => {
   const query = req.params.id;
   const { albums, photo_artist } = req.body;
 
@@ -62,12 +62,10 @@ module.exports.updateArtist = async (req, res, next) => {
         new: true,
         upsert: true,
         setDefaultsOnInsert: true,
-      },
-      (err, docs) => {
-        if (!err) res.status(200).send(docs);
-        else res.status(500).send(err);
       }
-    );
+    )
+      .then((docs) => res.status(200).send(docs))
+      .catch((err) => res.status(500).send(err));
   } catch (error) {
     return res.status(400).json({ message: error, type: "catch error" });
   }

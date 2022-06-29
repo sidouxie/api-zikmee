@@ -4,7 +4,9 @@ const artistController = require("../controller/artistController");
 
 //ALBUM
 router.get("/music", musicController.getMusic);
+router.get("/music/:id", musicController.getMusicById);
 router.post("/music", musicController.postAlbum);
+router.patch("/music/:id", musicController.updateAlbum);
 
 //ARTIST
 router.get("/artist", artistController.getArtists);
