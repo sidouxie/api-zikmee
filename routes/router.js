@@ -3,6 +3,7 @@ const musicController = require("../controller/musicController");
 const artistController = require("../controller/artistController");
 const authController = require("../controller/authController");
 const userController = require("../controller/userController");
+const { checkAuth } = require("../middleware/checkAuth");
 
 //ALBUM
 router.get("/music", musicController.getMusic);
@@ -23,6 +24,6 @@ router.post("/auth/signup", authController.signUp);
 router.post("/auth/login", authController.login);
 
 //USER DATABASE
-router.get("/user", userController.getUser);
+router.get("/user", checkAuth, userController.getUser);
 
 module.exports = router;
