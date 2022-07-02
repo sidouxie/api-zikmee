@@ -23,3 +23,18 @@ module.exports.checkAuth = async (req, res, next) => {
     return res.status(400).send(error);
   }
 };
+
+module.exports.checkIsAdmin = async (req, res, next) => {
+  const auth = req.headers.authorization;
+  if (!auth) return res.status(500).send("not authorized");
+  try {
+    const token = auth.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.KEY_TOKEN);
+    const user = await User.findById(decoded.id).select("isAdmin");
+    if (!user.isAdmin) {
+      return res.status(400).send("Not Authorized to do this");
+    } else next();
+  } catch (error) {
+    return res.status(400).send(error);
+  }
+};

@@ -43,7 +43,7 @@ module.exports.updateArtist = async (req, res) => {
   const query = req.params.id;
   const { albums, photo_artist } = req.body;
 
-  if (!ObjectID.isValid(query) || !ObjectID.isValid(req.body.albums)) {
+  if (!ObjectID.isValid(query)) {
     return res.status(400).send("id is not valid : " + query);
   }
 
